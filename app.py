@@ -1,13 +1,24 @@
 from ultralytics import RTDETR
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from PIL import Image
 import io
 
 # Inicializar Flask
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 # Cargar el modelo entrenado
 model = RTDETR("best.pt") 
+
+# Ruta de prueba
+@app.route('/test', methods=['GET'])
+def hello_world():
+    texto = "Me encantó este producto, es excelente"
+
+    return jsonify({'message': texto})
+
 
 @app.route('/predict_api', methods=['POST'])
 def predict_api():
@@ -48,4 +59,4 @@ def predict_api():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
