@@ -4,6 +4,7 @@ from flask_cors import CORS
 from PIL import Image
 import io
 
+
 # Inicializar Flask
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
